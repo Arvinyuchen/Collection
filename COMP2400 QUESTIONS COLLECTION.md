@@ -157,3 +157,12 @@ SELECT name,
   To add a 'middling' option, we would simply insert another *WHEN...THEN* section.
 - *AS* operator
   This is simply used to label columns or expressions, to make them display more nicely or to make easier to reference when used as part of subquery.
+
+#### ***LIMIT***
+keyword *LIMIT* should in the end of query
+```postgresql
+SELECT DISTINCT surname
+FROM cd.members
+ORDER BY surname
+LIMIT 10;
+```
