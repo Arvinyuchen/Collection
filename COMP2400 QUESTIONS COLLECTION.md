@@ -152,3 +152,8 @@ SELECT name,
 	END AS cost
 	FROM cd.facilities; 
 ```
+- This includes the computation in the area of the query between SELECT and FROM.
+- CASE statement
+  To add a 'middling' option, we would simply insert another *WHEN...THEN* section.
+- *AS* operator
+  This is simply used to label columns or expressions, to make them display more nicely or to make easier to reference when used as part of subquery.
