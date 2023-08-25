@@ -141,3 +141,14 @@
 *Q3: How many directors are there in this database who have never written a movie?*
 
 Since the id is the primary key, it is capable to identify each tuple. Therefore, the set of directors who have wrote movie is disjoint with the set of directors who have never written a movie. Moreover, we ca use the except as the operator between two relations. 
+
+#### ***Directly Modify the Column Selection***
+```postgresql
+SELECT name, 
+	CASE WHEN (monthlymaintenance > 100) THEN
+		'expensive'
+	ELSE
+		'cheap'
+	END AS cost
+	FROM cd.facilities; 
+```
