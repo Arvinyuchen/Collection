@@ -166,3 +166,17 @@ FROM cd.members
 ORDER BY surname
 LIMIT 10;
 ```
+#### ***Rename the Colunmns Name***
+Add the *AS name* after iundicating the colunms
+```postgresql
+SELECT bks.starttime AS start, facs.name AS name
+	FROM 
+		cd.facilities facs
+		INNER JOIN cd.bookings bks
+			ON facs.facid = bks.facid
+	WHERE 
+		facs.name in ('Tennis Court 2','Tennis Court 1') AND 
+		bks.starttime >= '2012-09-21' AND 
+		bks.starttime < '2012-09-22'
+ORDER BY bks.starttime;
+```
