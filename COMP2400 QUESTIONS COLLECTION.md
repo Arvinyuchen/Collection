@@ -195,3 +195,13 @@ select distinct mems.firstname || ' ' || mems.surname as member, facs.name as fa
 order by member, facility          
 ```
 *NOTE: the || operator is used to concatenate strings.*
+
+### ***Is not Null and the GROUP BY***
+```postgresql
+select recommendedby, count(*) 
+	from cd.members
+	where recommendedby is not null
+	group by recommendedby
+order by recommendedby;       
+```
+***NOTE:Using the GROUP BY the count or aggregate functions after the SELECT statement before the FROM statement is manipulating on the grouped cluster not the whole relation***
