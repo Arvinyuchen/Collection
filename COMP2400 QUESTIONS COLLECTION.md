@@ -236,3 +236,17 @@ FROM department AS d
 WHERE EXISTS (SELECT * FROM employee AS e 
               WHERE d.dnumber = e.dno AND e.salary < 50000);
 ```
+
+### ***The introduction of Window Function***
+```postgresql 
+select column1 column2 windowfunction() OVER(partition by patition.expression
+ORDER BY sort_expression [Windoe Frame]) AS calculated_column 
+FROM 
+   table_name
+```
+Window functions operate on the result set of (sub)-query, after the WHERE clause and all standard aggregation. They operate on a window of data.
+- column1, column2, etc.: These are the columns you want to retrieve in the result set.
+window_function(): The specific window function you're using (e.g., ROW_NUMBER(), SUM(), etc.).
+- PARTITION BY: Divides the result set into partitions based on specific columns. The window function operates separately within each partition.
+- ORDER BY: Specifies the order of rows within each partition.
+- ROWS/RANGE window_frame: Defines the range of rows that the window function should consider for calculations.
