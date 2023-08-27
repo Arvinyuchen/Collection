@@ -134,10 +134,6 @@
             AND employee.dno = h.dno;
       ```
 
-      
-
-#### ***EXCEPT*** 
-
 *Q3: How many directors are there in this database who have never written a movie?*
 
 Since the id is the primary key, it is capable to identify each tuple. Therefore, the set of directors who have wrote movie is disjoint with the set of directors who have never written a movie. Moreover, we ca use the except as the operator between two relations. 
@@ -205,3 +201,32 @@ select recommendedby, count(*)
 order by recommendedby;       
 ```
 ***NOTE:Using the GROUP BY the count or aggregate functions after the SELECT statement before the FROM statement is manipulating on the grouped cluster not the whole relation***
+
+### ***The Application of Subqueries***
+```postgresql
+select name, revenue from (
+select f.name,sum(slots * case when b.memid =0 
+					then f.guestcost else f.membercost end ) as revenue
+from cd.facilities f inner join cd.bookings b
+on f.facid = b.facid
+group by f.name) as agg
+where revenue < 1000
+order by revenue;
+```
+We used the subquery to produce a relation with name of facilities and 
+the sum of revenue. Since we sql does not support us to putting column names in the HAVING clause which throw out the error message: "ERROR: column "revenue" does not exist. ". Therefore, we need to use the outer query to filter and order the rows. 
+
+### ***The Introduction of With***
+```postgresql
+select facid, sum(slots) as totalslots
+	from cd.bookings
+	group by facid
+	having sum(slots) = (select max(sum2.totalslots) from
+		(select sum(slots) as totalslots
+		from cd.bookings
+		group by facid
+		) as sum2);
+```
+In this example, we could also use the HAVING. However, using the HAVING clause consequences the ugly and untidy query.
+
+
