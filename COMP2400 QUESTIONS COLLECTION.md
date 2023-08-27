@@ -206,7 +206,6 @@ order by recommendedby;
 ```postgresql
 select name, revenue from (
 select f.name,sum(slots * case when b.memid =0 
-					then f.guestcost else f.membercost end ) as revenue
 from cd.facilities f inner join cd.bookings b
 on f.facid = b.facid
 group by f.name) as agg
@@ -229,4 +228,11 @@ select facid, sum(slots) as totalslots
 ```
 In this example, we could also use the HAVING. However, using the HAVING clause consequences the ugly and untidy query.
 
-
+### ***The correlated Subqeury***
+The main purpose of correlated subquery is to use two relations and connect them with the primary-key trying to find information that is located in other relations which couldn't be found in current relation. 
+```postgresql
+SELECT dname
+FROM department AS d 
+WHERE EXISTS (SELECT * FROM employee AS e 
+              WHERE d.dnumber = e.dno AND e.salary < 50000);
+```
