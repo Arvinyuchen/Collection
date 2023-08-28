@@ -257,7 +257,7 @@ window_function(): The specific window function you're using (e.g., ROW_NUMBER()
 select facid, total from(
    select facid,sum(slots) total, rank() over(order by sum(slots) desc) rank 
          from cd.bookings
-         group  y facid) as ranked 
+         group  by facid) as ranked 
          where rank = 1
 ```
 #### *CTEs/ WITH*
