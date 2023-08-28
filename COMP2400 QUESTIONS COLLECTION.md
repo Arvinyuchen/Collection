@@ -250,3 +250,27 @@ window_function(): The specific window function you're using (e.g., ROW_NUMBER()
 - PARTITION BY: Divides the result set into partitions based on specific columns. The window function operates separately within each partition.
 - ORDER BY: Specifies the order of rows within each partition.
 - ROWS/RANGE window_frame: Defines the range of rows that the window function should consider for calculations.
+
+### ***Comparison between CTEs and Windows Functions***
+#### *Window Function*
+```postgresql
+select facid, total from(
+   select facid,sum(slots) total, rank() over(order by sum(slots) desc) rank 
+         from cd.bookings
+         group  y facid) as ranked 
+         where rank = 1
+```
+#### *CTEs/ WITH*
+```postgresql 
+with whole as (select facid, sum(slots) as totalslots
+      from cd.bookings
+      group by facid)
+
+select facid, totalslots 
+from whole 
+where totalslots = (select max(totalslots) from whole);
+```
+
+The main difference is the method of acquiring the relation with relation schema 
+with facid and sum of slots. We can do more manipulation on data if we use window 
+function.
